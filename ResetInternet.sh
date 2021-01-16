@@ -1,13 +1,21 @@
 #!/bin/bash
+# Function to reset VM internet connnection
 function reset() 
 {
+# Grab list of VM names
 sudo vboxmanage list -l vms | grep "Name:"
-VMNames=$(sudo vboxmanage list -l vms | grep "Name:") 
+# Store list into variable
+VMNames=$(sudo vboxmanage list -l vms | grep "Name:")
+# Prompt user
 printf "\nEnter name of Virtual Machine or press CTRL-C to exit:\n"
+# Read user input
 read inputName 
+# Get length of list of VMs
 VMNamesLength=${#VMNames} 
 inputNameLength=${#inputName}
+# Variable to check for existence of VM 
 found=0
+# Loop through names, and if it exists, reset network connection of VM
 for (( i=0 ; i <= $VMNamesLength-$inputNameLength; i++ )) 
 do 
 	if [ "$inputName" == "${VMNames:i:$inputNameLength}" ]
@@ -34,4 +42,5 @@ do
 	fi
 done
 }
+# Call reset method
 reset 
